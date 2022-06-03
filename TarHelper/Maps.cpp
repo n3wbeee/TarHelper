@@ -69,26 +69,24 @@ void QAbstractScrollArea::wheelEvent(QWheelEvent* event) {
 	return;		//ÖØÔØ¹öÂÖÊÂ¼þ ÈÃÆäºöÂÔ¹öÂÖ
 }
 
-bool Maps::eventFilter(QObject* watched, QEvent *event){
+bool Maps::eventFilter(QObject* watched, QEvent* event) {
 	if (watched == ui.mapArea && event->type() == QEvent::Wheel) {
-		QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(event);
+		QWheelEvent* wheelEvent = static_cast<QWheelEvent*>(event);
 		QRect tmp = ui.maps->geometry();
 		int adjustSize = 500;
 		/*Í¼ÏñËõ·Å*/
 		if (wheelEvent->delta() > 0) {
-			imgSizeDivisor > 1 ? --imgSizeDivisor:NULL;
+			imgSizeDivisor > 1 ? --imgSizeDivisor : NULL;
 			ui.maps->setPixmap(QPixmap::fromImage(
 				qimg.scaled(qimg.width() / imgSizeDivisor, qimg.height() / imgSizeDivisor,
-				Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
+					Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
 		}
 		else if (wheelEvent->delta() < 0) {
 			++imgSizeDivisor;
 			ui.maps->setPixmap(QPixmap::fromImage(
 				qimg.scaled(qimg.width() / imgSizeDivisor, qimg.height() / imgSizeDivisor,
-				Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
+					Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation)));
 		}
 	}
 	return true;
 }
-
-/*dev*/
