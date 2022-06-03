@@ -84,6 +84,13 @@ void QGraphicsView::wheelEvent(QWheelEvent* event) {
 
 bool Maps::eventFilter(QObject* watched, QEvent* event) {
 	if (watched == ui.mapArea && event->type() == QEvent::Wheel) {
-		QWheelEvent* = static_cast<QWheelEvent>(event);
+		QWheelEvent* wheelEvent = static_cast<QWheelEvent*>(event);
+		if (wheelEvent->delta() < 0) {
+			ui.mapArea->scale(0.9, 0.9);
+		}
+		else {
+			ui.mapArea->scale(1.1, 1.1);
+		}
 	}
+	return false;
 }

@@ -4,14 +4,14 @@
 #include "qgraphicsscene.h"
 #include "qpropertyanimation.h"
 
-class Maps : public QWidget{
+class Maps : public QWidget {
 	Q_OBJECT
 
 public:
-	Maps(QWidget *parent = Q_NULLPTR);
+	Maps(QWidget* parent = Q_NULLPTR);
 	~Maps();
 
-	void paintEvent(QPaintEvent *event); 
+	void paintEvent(QPaintEvent* event);
 
 private slots:
 	void on_reserve_clicked();
@@ -23,7 +23,7 @@ private:
 	Ui::Maps ui;
 	int imgSizeDivisor;
 	QImage qimg;
-	QGraphicsScene *scene;
+	QGraphicsScene* scene;
 	QPropertyAnimation animation;
 
 	void anim_slide(int num);
