@@ -326,7 +326,7 @@ QScrollArea{
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>D:/素材/1623142935626.jpg</pixmap>
+          <pixmap>D:/素材/图片/a3305c6b62e00292eed3fb04b95773cd747a53b4_full.jpg</pixmap>
          </property>
          <property name="scaledContents">
           <bool>false</bool>
