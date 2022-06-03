@@ -82,6 +82,12 @@ QGraphicsView{
        <height>0</height>
       </size>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>156</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="title">
       <string>GroupBox</string>
      </property>
@@ -242,9 +248,6 @@ QGraphicsView{
    </item>
    <item>
     <widget class="QGraphicsView" name="mapArea">
-     <property name="focusPolicy">
-      <enum>Qt::StrongFocus</enum>
-     </property>
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
@@ -253,9 +256,6 @@ QGraphicsView{
      </property>
      <property name="dragMode">
       <enum>QGraphicsView::ScrollHandDrag</enum>
-     </property>
-     <property name="cacheMode">
-      <set>QGraphicsView::CacheNone</set>
      </property>
     </widget>
    </item>

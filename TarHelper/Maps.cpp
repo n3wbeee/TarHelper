@@ -12,6 +12,8 @@ Maps::Maps(QWidget *parent)
 {	
 	ui.setupUi(this);
 
+	ui.mapArea->installEventFilter(this);	//安装事件过滤器
+
 	/*QGraphicsScene初始化与载入图片*/
 	scene = new QGraphicsScene(this);
 	ui.mapArea->setScene(scene);
@@ -74,4 +76,14 @@ void Maps::anim_slide(int num) {
 	animation.setStartValue(ui.slider->pos());
 	animation.setEndValue(QPoint(0, 48 * num));
 	animation.start();
+}
+
+void QGraphicsView::wheelEvent(QWheelEvent* event) {
+	return;		//重载滚轮事件 让其忽略滚轮
+}
+
+bool Maps::eventFilter(QObject* watched, QEvent* event) {
+	if (watched == ui.mapArea && event->type() == QEvent::Wheel) {
+		QWheelEvent* = static_cast<QWheelEvent>(event);
+	}
 }

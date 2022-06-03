@@ -27,4 +27,5 @@ private:
 	QPropertyAnimation animation;
 
 	void anim_slide(int num);
+	bool eventFilter(QObject* watched, QEvent* event);
 };
