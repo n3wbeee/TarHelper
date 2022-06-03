@@ -5,13 +5,18 @@
 #include "qevent.h"
 #include "qthread.h"
 #include "qscrollbar.h"
+#include "qgraphicsscene.h"
 
 Maps::Maps(QWidget *parent)
 	: QWidget(parent), qimg(":/Maps/reserve"), imgSizeDivisor(1)
 {	
 	ui.setupUi(this);
 
-	ui.mapArea->installEventFilter(this);	//安装事件过滤器
+	/*QGraphicsScene初始化与载入图片*/
+	scene = new QGraphicsScene(this);
+	ui.mapArea->setScene(scene);
+	qimg.load(":/Maps/reserve");
+	scene->addPixmap(QPixmap::fromImage(qimg));
 
 	animation.setDuration(250);
 	animation.setTargetObject(ui.slider);
@@ -35,21 +40,33 @@ void Maps::paintEvent(QPaintEvent *event) {
 void Maps::on_reserve_clicked() {
 	anim_slide(0);
 	qimg.load(":/Maps/reserve");
+	scene->clear();
+	scene->setSceneRect(0, 0, qimg.width(), qimg.height());
+	scene->addPixmap(QPixmap::fromImage(qimg));
 }
 
 void Maps::on_forest_clicked() {
 	anim_slide(3);
 	qimg.load(":/Maps/forest");
+	scene->clear();
+	scene->setSceneRect(0, 0, qimg.width(), qimg.height());
+	scene->addPixmap(QPixmap::fromImage(qimg));
 }
 
 void Maps::on_interchange_clicked() {
 	anim_slide(1);
 	qimg.load(":/Maps/interchange");
+	scene->clear();
+	scene->setSceneRect(0, 0, qimg.width(), qimg.height());
+	scene->addPixmap(QPixmap::fromImage(qimg));
 }
 
 void Maps::on_shoreline_clicked() {
 	anim_slide(2);
 	qimg.load(":/Maps/shoreline");
+	scene->clear();
+	scene->setSceneRect(0, 0, qimg.width(), qimg.height());
+	scene->addPixmap(QPixmap::fromImage(qimg));
 }
 
 void Maps::anim_slide(int num) {
@@ -57,12 +74,4 @@ void Maps::anim_slide(int num) {
 	animation.setStartValue(ui.slider->pos());
 	animation.setEndValue(QPoint(0, 48 * num));
 	animation.start();
-}
-
-void QAbstractScrollArea::wheelEvent(QWheelEvent* event) {
-	return;		//重载滚轮事件 让其忽略滚轮
-}
-
-bool Maps::eventFilter(QObject* watched, QEvent* event) {
-	return true;
 }
