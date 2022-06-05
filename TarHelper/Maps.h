@@ -24,7 +24,7 @@ private:
 	Ui::Maps ui;
 	int imgSizeDivisor;
 	QImage qimg;
-	shared_ptr<QGraphicsScene> scene;
+	unique_ptr<QGraphicsScene> scene;
 	QPropertyAnimation animation;
 
 	void anim_slide(int num);
