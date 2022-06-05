@@ -8,14 +8,14 @@
 #include "qgraphicsscene.h"
 
 Maps::Maps(QWidget *parent)
-	: QWidget(parent), qimg(":/Maps/reserve"), imgSizeDivisor(1)
+	: QWidget(parent), qimg(":/Maps/reserve"), 
+          imgSizeDivisor(1), scene(new QGraphicsScene(this))
 {	
 	ui.setupUi(this);
 
-	ui.mapArea->installEventFilter(this);	//°²×°ÊÂ¼ş¹ıÂËÆ÷
+	ui.mapArea->installEventFilter(this);	//å®‰è£…äº‹ä»¶è¿‡æ»¤å™¨
 
-	/*QGraphicsScene³õÊ¼»¯ÓëÔØÈëÍ¼Æ¬*/
-	scene = new QGraphicsScene(this);
+	/*QGraphicsSceneåˆå§‹åŒ–ä¸è½½å…¥å›¾ç‰‡*/
 	ui.mapArea->setScene(scene);
 	qimg.load(":/Maps/reserve");
 	scene->addPixmap(QPixmap::fromImage(qimg));
@@ -31,14 +31,14 @@ Maps::~Maps() {
 
 void Maps::paintEvent(QPaintEvent *event) {
 	QWidget::paintEvent(event);
-	static int paint(0);	//ÖØÔØpaintEventÊÂ¼ş£¬µÚÒ»´ÎÔØÈë´°¿ÚÊ±½«»¬¿éÖÃ³õÊ¼Î»ÖÃ
-	if (paint <= 2) {		//´°¿ÚÃ¿´ÎÖØ»æ¶¼»áµ÷ÓÃpaintEvent£¬±ØĞëÉèÖÃ¸öãĞÖµ²»È»¶¯»­Ğ§¹ûÎŞĞ§
+	static int paint(0);	//é‡è½½paintEventäº‹ä»¶ï¼Œç¬¬ä¸€æ¬¡è½½å…¥çª—å£æ—¶å°†æ»‘å—ç½®åˆå§‹ä½ç½®
+	if (paint <= 2) {		//çª—å£æ¯æ¬¡é‡ç»˜éƒ½ä¼šè°ƒç”¨paintEventï¼Œå¿…é¡»è®¾ç½®ä¸ªé˜ˆå€¼ä¸ç„¶åŠ¨ç”»æ•ˆæœæ— æ•ˆ
 		ui.slider->move(0, 0);
 		++paint;
 	}
 }
 
-/*Í¼Æ¬Ñ¡Ôñ*/
+/*å›¾ç‰‡é€‰æ‹©*/
 void Maps::on_reserve_clicked() {
 	anim_slide(0);
 	qimg.load(":/Maps/reserve");
@@ -79,7 +79,7 @@ void Maps::anim_slide(int num) {
 }
 
 void QGraphicsView::wheelEvent(QWheelEvent* event) {
-	return;		//ÖØÔØ¹öÂÖÊÂ¼ş ÈÃÆäºöÂÔ¹öÂÖ
+	return;		//é‡è½½æ»šè½®äº‹ä»¶ è®©å…¶å¿½ç•¥æ»šè½®
 }
 
 bool Maps::eventFilter(QObject* watched, QEvent* event) {
