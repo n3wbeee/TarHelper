@@ -1,4 +1,5 @@
 #include <QWidget>
+#include <memory>
 #include "qstring.h"
 #include "ui_Maps.h"
 #include "qgraphicsscene.h"
@@ -23,7 +24,7 @@ private:
 	Ui::Maps ui;
 	int imgSizeDivisor;
 	QImage qimg;
-	QGraphicsScene* scene;
+	shared_ptr<QGraphicsScene> scene;
 	QPropertyAnimation animation;
 
 	void anim_slide(int num);
