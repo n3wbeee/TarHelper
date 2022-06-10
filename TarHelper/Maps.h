@@ -1,5 +1,4 @@
 #include <QWidget>
-#include <memory>
 #include "qstring.h"
 #include "ui_Maps.h"
 #include "qgraphicsscene.h"
@@ -19,12 +18,15 @@ private slots:
 	void on_forest_clicked();
 	void on_interchange_clicked();
 	void on_shoreline_clicked();
+	void on_reset_clicked();
+	void on_openOutside_clicked();
 
 private:
 	Ui::Maps ui;
 	int imgSizeDivisor;
 	QImage qimg;
-	unique_ptr<QGraphicsScene> scene;
+	QString fileName;
+	QGraphicsScene* scene;
 	QPropertyAnimation animation;
 
 	void anim_slide(int num);

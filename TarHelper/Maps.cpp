@@ -1,4 +1,5 @@
 #include "Maps.h"
+#include "qdir.h"
 #include "qimage.h"
 #include "qdebug.h"
 #include "qpoint.h"
@@ -6,16 +7,18 @@
 #include "qthread.h"
 #include "qscrollbar.h"
 #include "qgraphicsscene.h"
+#include "qdesktopservices.h"
 
 Maps::Maps(QWidget *parent)
 	: QWidget(parent), qimg(":/Maps/reserve"), 
-          imgSizeDivisor(1), scene(new QGraphicsScene(this))
+	imgSizeDivisor(1), fileName("reserve.jpg")
 {	
 	ui.setupUi(this);
 
 	ui.mapArea->installEventFilter(this);	//安装事件过滤器
 
 	/*QGraphicsScene初始化与载入图片*/
+	scene = new QGraphicsScene(this);
 	ui.mapArea->setScene(scene);
 	qimg.load(":/Maps/reserve");
 	scene->addPixmap(QPixmap::fromImage(qimg));
@@ -26,7 +29,7 @@ Maps::Maps(QWidget *parent)
 }
 
 Maps::~Maps() {
-
+	delete scene;
 }
 
 void Maps::paintEvent(QPaintEvent *event) {
@@ -42,6 +45,7 @@ void Maps::paintEvent(QPaintEvent *event) {
 void Maps::on_reserve_clicked() {
 	anim_slide(0);
 	qimg.load(":/Maps/reserve");
+	fileName = "reserve.jpg";
 	scene->clear();
 	scene->setSceneRect(0, 0, qimg.width(), qimg.height());
 	scene->addPixmap(QPixmap::fromImage(qimg));
@@ -50,6 +54,7 @@ void Maps::on_reserve_clicked() {
 void Maps::on_forest_clicked() {
 	anim_slide(3);
 	qimg.load(":/Maps/forest");
+	fileName = "forest.png";
 	scene->clear();
 	scene->setSceneRect(0, 0, qimg.width(), qimg.height());
 	scene->addPixmap(QPixmap::fromImage(qimg));
@@ -58,6 +63,7 @@ void Maps::on_forest_clicked() {
 void Maps::on_interchange_clicked() {
 	anim_slide(1);
 	qimg.load(":/Maps/interchange");
+	fileName = "interchange.jpg";
 	scene->clear();
 	scene->setSceneRect(0, 0, qimg.width(), qimg.height());
 	scene->addPixmap(QPixmap::fromImage(qimg));
@@ -66,9 +72,31 @@ void Maps::on_interchange_clicked() {
 void Maps::on_shoreline_clicked() {
 	anim_slide(2);
 	qimg.load(":/Maps/shoreline");
+	fileName = "shoreline.jpg";
 	scene->clear();
 	scene->setSceneRect(0, 0, qimg.width(), qimg.height());
 	scene->addPixmap(QPixmap::fromImage(qimg));
+}
+
+void Maps::on_reset_clicked() {
+	if (!QFile::exists("./maps")) {
+		QDir qdir;
+		qdir.mkdir("./maps");
+	}
+	QFile::remove("./maps/forest.png");
+	QFile::copy(":/Maps/forest", "./maps/forest.png");
+	QFile::remove("./maps/interchange.jpg");
+	QFile::copy(":/Maps/interchange", "./maps/interchange.jpg");
+	QFile::remove("./maps/reserve.jpg");
+	QFile::copy(":/Maps/reserve", "./maps/reserve.jpg");
+	QFile::remove("./maps/shoreline.jpg");
+	QFile::copy(":/Maps/shoreline", "./maps/shoreline.jpg");
+}
+
+void Maps::on_openOutside_clicked() {
+	QString filePath = "./Maps/" + fileName;  //获得当前正在显示的图像是什么
+	QDesktopServices::openUrl(	//打开文件
+		QUrl::fromLocalFile(filePath));
 }
 
 void Maps::anim_slide(int num) {
@@ -86,10 +114,10 @@ bool Maps::eventFilter(QObject* watched, QEvent* event) {
 	if (watched == ui.mapArea && event->type() == QEvent::Wheel) {
 		QWheelEvent* wheelEvent = static_cast<QWheelEvent*>(event);
 		if (wheelEvent->delta() < 0) {
-			ui.mapArea->scale(0.9, 0.9);
+			ui.mapArea->scale(5.0 / 6, 5.0 / 6);
 		}
 		else {
-			ui.mapArea->scale(1.1, 1.1);
+			ui.mapArea->scale(6.0 / 5, 6.0 / 5);
 		}
 	}
 	return false;
