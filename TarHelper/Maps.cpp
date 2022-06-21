@@ -79,10 +79,12 @@ void Maps::on_shoreline_clicked() {
 }
 
 void Maps::on_reset_clicked() {
+	/*如果没有文件夹就创建一个*/
 	if (!QFile::exists("./maps")) {
 		QDir qdir;
 		qdir.mkdir("./maps");
 	}
+	/*更新图片文件*/
 	QFile::remove("./maps/forest.png");
 	QFile::copy(":/Maps/forest", "./maps/forest.png");
 	QFile::remove("./maps/interchange.jpg");
