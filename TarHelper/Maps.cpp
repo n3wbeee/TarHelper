@@ -1,4 +1,4 @@
-#include "Maps.h"
+#include "maps.h"
 #include "qdir.h"
 #include "qimage.h"
 #include "qdebug.h"

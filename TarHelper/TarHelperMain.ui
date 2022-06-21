@@ -1,25 +1,101 @@
-<UI version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>TarHelperMainClass</class>
- <widget class="QWidget" name="TarHelperMainClass" >
-  <property name="objectName" >
-   <string notr="true">TarHelperMainClass</string>
-  </property>
-  <property name="geometry" >
+ <widget class="QWidget" name="TarHelperMainClass">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>954</width>
+    <height>578</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>TarHelperMain</string>
-  </property>$centralwidget$
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+	background-color:#252423;
+}
+
+QPushButton{
+	font-family: &quot;Microsoft YaHei&quot;;
+	font-size: 12pt;
+	background-color:#252423;
+	border-style: none;
+	min-height: 48px;
+	color: #B8B6B4;
+}
+
+QPushButton::hover{
+	background-color: #323130;
+}
+
+QPushButton::pressed{
+	background-color: #3B3A39;
+}
+
+QPushButton::checked{
+	background-color: #3B3A39;
+}
+
+QGroupBox{
+	border: none;
+}
+
+QLabel{
+	background-color: #transparent;
+}
+
+QScrollArea{
+	border: none;
+}
+
+QGraphicsView{
+	border: none;
+}</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="maximumSize">
+        <size>
+         <width>148</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>GroupBox</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources>
-   <include location="TarHelperMain.qrc"/>
+  <include location="TarHelperMain.qrc"/>
  </resources>
  <connections/>
-</UI>
+</ui>

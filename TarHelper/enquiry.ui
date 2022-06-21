@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>enquiry</class>
+ <widget class="QWidget" name="enquiry">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>679</width>
+    <height>376</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>enquiry</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+	background-color:#252423;
+}
+
+QPushButton{
+	font-family: &quot;Microsoft YaHei&quot;;
+	font-size: 12pt;
+	background-color:#252423;
+	border-style: none;
+	min-height: 48px;
+	color: #B8B6B4;
+}
+
+QPushButton::hover{
+	background-color: #323130;
+}
+
+QPushButton::pressed{
+	background-color: #3B3A39;
+}
+
+QPushButton::checked{
+	background-color: #3B3A39;
+}
+
+QGroupBox{
+	border: none;
+}
+
+QLabel{
+	background-color: #transparent;
+}
+
+QScrollArea{
+	border: none;
+}
+
+QGraphicsView{
+	border: none;
+}
+
+QLineEdit{
+	border:1px solid #B8B6B4;
+	border-radius: 8px;
+	color: #B8B6B4;
+	padding-left: 5px
+}
+
+QListWidget{
+	color: #B8B6B4;
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="2">
+    <widget class="QListWidget" name="listWidget"/>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLineEdit" name="lineEdit"/>
+   </item>
+   <item row="0" column="0" rowspan="3">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

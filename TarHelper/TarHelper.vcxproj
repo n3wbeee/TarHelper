@@ -31,7 +31,7 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>5.9.9_msvc2017_64</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;gui;widgets;network</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
@@ -91,15 +91,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="TarHelperMain.qrc" />
-    <QtUic Include="Maps.ui" />
+    <QtUic Include="enquiry.ui" />
+    <QtUic Include="maps.ui" />
     <QtUic Include="TarHelperMain.ui" />
     <QtMoc Include="TarHelperMain.h" />
-    <ClCompile Include="Maps.cpp" />
+    <ClCompile Include="enquiry.cpp" />
+    <ClCompile Include="maps.cpp" />
     <ClCompile Include="TarHelperMain.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Maps.h" />
+    <QtMoc Include="maps.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="enquiry.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
