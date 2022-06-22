@@ -10,6 +10,11 @@
     <height>376</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>思源黑体</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>enquiry</string>
   </property>
@@ -19,7 +24,7 @@
 }
 
 QPushButton{
-	font-family: &quot;Microsoft YaHei&quot;;
+	font-family: &quot;Source Han Sans CN&quot;;
 	font-size: 12pt;
 	background-color:#252423;
 	border-style: none;
@@ -56,22 +61,46 @@ QGraphicsView{
 }
 
 QLineEdit{
-	border:1px solid #B8B6B4;
-	border-radius: 8px;
+	border: 1px solid #B8B6B4;
+	border-radius: 16px;
 	color: #B8B6B4;
-	padding-left: 5px
+	padding-left: 10px;
+	font-family: &quot;Source Han Sans CN&quot;;
 }
 
-QListWidget{
+QTabelWidget::Item{
 	color: #B8B6B4;
+	font-family: &quot;Source Han Sans CN&quot;;
+}
+
+QTabelWidget{
+	border: 0px none #252423;
+	color: #B8B6B4;
+	font-family: &quot;Source Han Sans CN&quot;;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="2">
-    <widget class="QListWidget" name="listWidget"/>
-   </item>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item row="1" column="2">
-    <widget class="QLineEdit" name="lineEdit"/>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="font">
+      <font>
+       <family>Source Han Sans CN</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
    <item row="0" column="0" rowspan="3">
     <widget class="QGroupBox" name="groupBox">
@@ -87,6 +116,25 @@ QListWidget{
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <attribute name="horizontalHeaderVisible">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
     </widget>
    </item>
   </layout>

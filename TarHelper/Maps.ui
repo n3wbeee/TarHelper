@@ -22,7 +22,7 @@
 }
 
 QPushButton{
-	font-family: &quot;Microsoft YaHei&quot;;
+	font-family: &quot;Source Han Sans CN&quot;;
 	font-size: 12pt;
 	background-color:#252423;
 	border-style: none;

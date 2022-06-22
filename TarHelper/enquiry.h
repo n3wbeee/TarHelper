@@ -15,11 +15,13 @@ public:
 
 private slots:
 	void on_lineEdit_returnPressed();
-	void replyFinished();
+	void replyFinishedAPI();
 
 private:
 	Ui::enquiry ui;
 	QNetworkRequest req;
-	QNetworkReply* reply;
-	QNetworkAccessManager *networkManager;
+	QNetworkReply* replyAPI;
+	QNetworkAccessManager* networkManager;
+
+	void replyFinishedIcon(int i, QNetworkReply* replyIcon);
 };
