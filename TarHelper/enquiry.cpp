@@ -36,12 +36,12 @@ void Enquiry::replyFinishedAPI(){
 	/*读取Json中Array的每一个Object*/
 	QJsonArray jsonArray = replyAPIJson.array();
 	ui.tableWidget->setRowCount(jsonArray.size());
-	for (int objCount(0); objCount < jsonArray.size(); ++objCount) {
+	for (int objCount = 0; objCount < jsonArray.size(); objCount++) {
 		QJsonValue jsonValue = jsonArray.at(objCount);
 		QJsonObject jsonObject = jsonValue.toObject();
 		/*遍历Object的每个key，找到需要的key*/
 		QStringList keys = jsonObject.keys();
-		for (int i = 0; i < keys.size(); ++i) {
+		for (int i = 0; i < keys.size(); i++) {
 			QString key = keys.at(i);
 			if (key == "cnName") {
 				QJsonValue value = jsonObject.value(key);
@@ -80,15 +80,16 @@ void Enquiry::replyFinishedAPI(){
 
 void Enquiry::replyFinishedIcon(int row, QNetworkReply* replyIcon) {
 	/*配置Icon*/
-	QPixmap pixmap;
-	pixmap.loadFromData(replyIcon->readAll());
-	QIcon icon;
-	icon.addPixmap(pixmap);
 	QTableWidgetItem* iconItem = new QTableWidgetItem;
+	QPixmap pixmap;
+	QIcon icon;
+
+	pixmap.loadFromData(replyIcon->readAll());
+	icon.addPixmap(pixmap);
 	iconItem->setIcon(icon);
 	ui.tableWidget->setItem(row, 0, iconItem);
 
-	replyIcon->deleteLater();  //用户有责任在适当的时候删除 QNetworkreplyAPI 对象
+	replyIcon->deleteLater();
 }
 
 void Enquiry::on_lineEdit_returnPressed() {
@@ -99,3 +100,7 @@ void Enquiry::on_lineEdit_returnPressed() {
 
 	connect(replyAPI, &QNetworkReply::finished, this, &Enquiry::replyFinishedAPI);  //当请求完成时，执行槽函数
 }
+
+void Enquiry::on_pushButton_clicked() {
+	/*debug Here*/
+};

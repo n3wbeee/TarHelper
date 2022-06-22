@@ -15,6 +15,7 @@ public:
 
 private slots:
 	void on_lineEdit_returnPressed();
+	void on_pushButton_clicked();
 	void replyFinishedAPI();
 
 private:
