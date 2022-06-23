@@ -8,7 +8,7 @@ TarHelperMain::TarHelperMain(QWidget* parent)
     ui.setupUi(this);
 
     setWindowTitle("TarHelper");
-    setWindowFlags(Qt::FramelessWindowHint);
+    //setWindowFlags(Qt::FramelessWindowHint);
 
     Enquiry *enquiry = new Enquiry;
     ui.horizontalLayout->addWidget(enquiry);

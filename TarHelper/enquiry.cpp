@@ -2,6 +2,7 @@
 #include "qdebug.h"
 #include "qtextcodec.h"
 #include "qjsonarray.h"
+#include "qmessagebox.h"
 #include "qjsonobject.h"
 #include "qtablewidget.h"
 #include "qjsondocument.h"
@@ -13,6 +14,7 @@ Enquiry::Enquiry(QWidget* parent)
 	ui.setupUi(this);
 
 	ui.tableWidget->setColumnCount(3);
+	ui.tableWidget->setColumnWidth(0, 96);
 
 	req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
 	req.setRawHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
@@ -27,6 +29,14 @@ Enquiry::~Enquiry()
 }
 
 void Enquiry::replyFinishedAPI(){
+	if (replyAPI->error()) {
+		qDebug() << replyAPI->errorString();
+		replyAPI->deleteLater();
+		QMessageBox::critical(this, "Network Error", replyAPI->errorString());
+		return;
+	}
+	int statusCode = replyAPI->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+	qDebug() << "statusCode:" << statusCode;
 	/*清空tableWidget*/
 	ui.tableWidget->clear();
 	/*将获得的返回值转换为Json并解析*/
@@ -41,6 +51,7 @@ void Enquiry::replyFinishedAPI(){
 		QJsonObject jsonObject = jsonValue.toObject();
 		/*遍历Object的每个key，找到需要的key*/
 		QStringList keys = jsonObject.keys();
+		ui.tableWidget->setRowHeight(objCount, 96);
 		for (int i = 0; i < keys.size(); i++) {
 			QString key = keys.at(i);
 			if (key == "cnName") {
@@ -88,7 +99,7 @@ void Enquiry::replyFinishedIcon(int row, QNetworkReply* replyIcon) {
 	icon.addPixmap(pixmap);
 	iconItem->setIcon(icon);
 	ui.tableWidget->setItem(row, 0, iconItem);
-
+	
 	replyIcon->deleteLater();
 }
 

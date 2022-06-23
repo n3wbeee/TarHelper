@@ -68,15 +68,32 @@ QLineEdit{
 	font-family: &quot;Source Han Sans CN&quot;;
 }
 
-QTabelWidget::Item{
-	color: #B8B6B4;
-	font-family: &quot;Source Han Sans CN&quot;;
+QTableWidget{
+    background: #252423;
+    alternate-background-color: #323130;
+	outline: none;
+    color: #B8B6B4;
+    border:none;
 }
 
-QTabelWidget{
-	border: 0px none #252423;
+QTabWidget::item{
+    background: #252423;
 	color: #B8B6B4;
-	font-family: &quot;Source Han Sans CN&quot;;
+	outline-style: none;
+	border: none;
+}
+
+QTableView::item:hover {
+    background: #transparent;
+    border: none;
+}
+
+QTableView::item:selected {
+	background: #252423;
+}
+
+QTableView::item:selected:active {
+	background: #transparent;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -120,6 +137,9 @@ QTabelWidget{
    </item>
    <item row="2" column="2">
     <widget class="QTableWidget" name="tableWidget">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
@@ -129,10 +149,40 @@ QTabelWidget{
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::NoSelection</enum>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="gridStyle">
+      <enum>Qt::SolidLine</enum>
+     </property>
+     <property name="sortingEnabled">
+      <bool>false</bool>
+     </property>
      <attribute name="horizontalHeaderVisible">
       <bool>true</bool>
      </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
      <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
       <bool>false</bool>
      </attribute>
     </widget>
