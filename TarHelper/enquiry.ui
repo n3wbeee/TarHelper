@@ -183,7 +183,7 @@ QTableView::item:selected:active {
       <bool>false</bool>
      </attribute>
      <attribute name="verticalHeaderStretchLastSection">
-      <bool>false</bool>
+      <bool>true</bool>
      </attribute>
     </widget>
    </item>

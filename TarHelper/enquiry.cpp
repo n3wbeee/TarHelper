@@ -1,5 +1,8 @@
 #include "enquiry.h"
 #include "qdebug.h"
+#include "qlabel.h"
+#include "QHotkey.h"
+#include "qscreen.h"
 #include "qtextcodec.h"
 #include "qjsonarray.h"
 #include "qmessagebox.h"
@@ -37,6 +40,10 @@ void Enquiry::replyFinishedAPI(){
 	}
 	int statusCode = replyAPI->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 	qDebug() << "statusCode:" << statusCode;
+	if (statusCode != 200) {
+		QMessageBox::critical(this, "Network Error", static_cast<QString>(statusCode));
+		return;
+	}
 	/*清空tableWidget*/
 	ui.tableWidget->clear();
 	/*将获得的返回值转换为Json并解析*/
@@ -62,6 +69,7 @@ void Enquiry::replyFinishedAPI(){
 				QTableWidgetItem* nameItem = new QTableWidgetItem;
 				nameItem->setText(cnName);
 				nameItem->setTextColor("#B8B6B4");
+				//nameItem->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter); //居中
 				ui.tableWidget->setItem(objCount, 1, nameItem);
 			}
 			if (key == "avgDayPrice") {
@@ -91,14 +99,16 @@ void Enquiry::replyFinishedAPI(){
 
 void Enquiry::replyFinishedIcon(int row, QNetworkReply* replyIcon) {
 	/*配置Icon*/
-	QTableWidgetItem* iconItem = new QTableWidgetItem;
+	QLabel* icon = new QLabel;
 	QPixmap pixmap;
-	QIcon icon;
 
 	pixmap.loadFromData(replyIcon->readAll());
-	icon.addPixmap(pixmap);
-	iconItem->setIcon(icon);
-	ui.tableWidget->setItem(row, 0, iconItem);
+	icon->setPixmap(pixmap.scaled(72, 72, Qt::KeepAspectRatio, Qt::SmoothTransformation)); //图像缩放
+	icon->setAlignment(Qt::AlignCenter);
+	if (row%2){
+		icon->setStyleSheet("background: #323130");	//隔行高亮
+	}
+	ui.tableWidget->setCellWidget(row, 0, icon);
 	
 	replyIcon->deleteLater();
 }
@@ -114,4 +124,10 @@ void Enquiry::on_lineEdit_returnPressed() {
 
 void Enquiry::on_pushButton_clicked() {
 	/*debug Here*/
+	QPoint	posPoint = QCursor::pos();
+	qDebug() << posPoint;
+	
+	QScreen* screen = QGuiApplication::primaryScreen();
+	QPixmap pixmap = screen->grabWindow(0, posPoint.x(), posPoint.y()-42,  300, 28);
+	pixmap.save("C:/Users/10637_c4lx35f/Desktop/test.png");
 };
