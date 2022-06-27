@@ -9,7 +9,6 @@
 #include "qtablewidget.h"
 #include "qjsondocument.h"
 #include "qnetworkreply.h"
-#include "qxtglobalshortcut.h"
 
 Enquiry::Enquiry(QWidget* parent)
 	: QWidget(parent), replyAPI(NULL)
@@ -18,8 +17,6 @@ Enquiry::Enquiry(QWidget* parent)
 
 	ui.tableWidget->setColumnCount(3);
 	ui.tableWidget->setColumnWidth(0, 96);
-
-	QxtGlobalShortcut shortcut(this);
 
 	req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
 	req.setRawHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");

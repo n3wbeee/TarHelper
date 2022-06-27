@@ -54,8 +54,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <IncludePath>C:\Users\10637_c4lx35f\Downloads\Qxt_GlobalShortcut\qxtglobalshortcut5\gui;C:\Users\10637_c4lx35f\Downloads\Qxt_GlobalShortcut\qxtglobalshortcut5\core;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\10637_c4lx35f\Downloads\Qxt_GlobalShortcut\qxtglobalshortcut5\gui;C:\Users\10637_c4lx35f\Downloads\Qxt_GlobalShortcut\qxtglobalshortcut5\core;D:\Qt5.9\5.9.9\msvc2017_64\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Qt5.9\5.9.9\msvc2017_64\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
@@ -65,11 +65,11 @@
       </Command>
     </PostBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\10637_c4lx35f\Downloads\Qxt_GlobalShortcut\qxtglobalshortcut5\gui;C:\Users\10637_c4lx35f\Downloads\Qxt_GlobalShortcut\qxtglobalshortcut5\core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BUILD_QXT_CORE;BUILD_QXT_GUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
