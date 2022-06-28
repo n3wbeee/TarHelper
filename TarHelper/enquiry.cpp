@@ -20,8 +20,8 @@ Enquiry::Enquiry(QWidget* parent)
 	ui.tableWidget->setColumnCount(3);
 	ui.tableWidget->setColumnWidth(0, 96);
 
-	QTimer* timer = new QTimer(this);
-	//timer->start(5000);
+	timer = new QTimer(this);
+	timer->start(5000);
 	connect(timer, &QTimer::timeout, this, &Enquiry::on_pushButton_clicked);
 
 	networkManager = new QNetworkAccessManager(this);
@@ -32,7 +32,7 @@ Enquiry::~Enquiry()
 	delete networkManager;
 }
 
-void Enquiry::replyFinishedAPI(){
+void Enquiry::replyFinishedAPI() {
 	if (replyAPI->error()) {
 		qDebug() << replyAPI->errorString();
 		replyAPI->deleteLater();
@@ -138,7 +138,7 @@ void Enquiry::on_pushButton_clicked() {
 	buffer.open(QIODevice::WriteOnly);
 	pixmap.save(&buffer, "png");
 	auto const base64 = buffer.data().toBase64();	//将图片转换为base64
-	//pixmap.save("C:/Users/10637_c4lx35f/Desktop/test.png");
+	pixmap.save("C:/Users/10637_c4lx35f/Desktop/test.png");
 	/*配置POST请求*/
 	QNetworkRequest req;
 	QUrl url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic";
@@ -152,17 +152,30 @@ void Enquiry::on_pushButton_clicked() {
 
 	QNetworkReply* replyOCR = networkManager->post(req, data);
 	connect(replyOCR, &QNetworkReply::finished, this, [=]() {
-		Enquiry::replyFinishedOCR(replyOCR);
+		ui.lineEdit->setText(Enquiry::replyFinishedOCR(replyOCR).toLower());
+		emit ui.lineEdit->returnPressed();
+		timer->stop();
 	});
 };
 
-void Enquiry::replyFinishedOCR(QNetworkReply* replyOCR) {
-	qDebug() << replyOCR->error();
+QString Enquiry::replyFinishedOCR(QNetworkReply* replyOCR) {
 	QString replyOCRText = replyOCR->readAll();
+	QJsonDocument replyJson = QJsonDocument::fromJson(replyOCRText.toUtf8());
+	QJsonObject jsonObj = replyJson.object();
+	QJsonValue jsonValue = jsonObj.value("words_result");
+	QJsonArray jsonArray = jsonValue.toArray();
+	QJsonValue wordsValue = jsonArray.first();
+	QJsonObject wordsObj = wordsValue.toObject();
+	QJsonValue words = wordsObj.value("words");
+	QString wordsStr = words.toString();	//套娃 我都不知道写啥注释了 别动这块就行了
 
 	qDebug() << "\n";
+	qDebug() << wordsStr;
+
 	qDebug() << replyOCRText;
 
 	replyOCR->abort();
 	replyOCR->deleteLater();
+
+	return wordsStr;
 }

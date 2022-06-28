@@ -20,9 +20,10 @@ private slots:
 
 private:
 	Ui::enquiry ui;
+	QTimer* timer;
 	QNetworkReply* replyAPI;
 	QNetworkAccessManager* networkManager;
 
 	void replyFinishedIcon(int i, QNetworkReply* replyIcon);
-	void replyFinishedOCR(QNetworkReply* replyOCR);
+	QString replyFinishedOCR(QNetworkReply* replyOCR);
 };
