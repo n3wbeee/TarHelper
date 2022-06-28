@@ -10,6 +10,9 @@
     <height>578</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::NoFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>TarHelperMain</string>
   </property>

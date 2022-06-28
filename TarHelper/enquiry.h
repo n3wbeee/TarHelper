@@ -20,9 +20,9 @@ private slots:
 
 private:
 	Ui::enquiry ui;
-	QNetworkRequest req;
 	QNetworkReply* replyAPI;
 	QNetworkAccessManager* networkManager;
 
 	void replyFinishedIcon(int i, QNetworkReply* replyIcon);
+	void replyFinishedOCR(QNetworkReply* replyOCR);
 };

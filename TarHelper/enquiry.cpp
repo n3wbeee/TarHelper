@@ -1,6 +1,8 @@
 #include "enquiry.h"
 #include "qdebug.h"
 #include "qlabel.h"
+#include "qtimer.h"
+#include "qbuffer.h"
 #include "qscreen.h"
 #include "qtextcodec.h"
 #include "qjsonarray.h"
@@ -18,9 +20,9 @@ Enquiry::Enquiry(QWidget* parent)
 	ui.tableWidget->setColumnCount(3);
 	ui.tableWidget->setColumnWidth(0, 96);
 
-	req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-	req.setRawHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
-	req.setRawHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36");
+	QTimer* timer = new QTimer(this);
+	//timer->start(5000);
+	connect(timer, &QTimer::timeout, this, &Enquiry::on_pushButton_clicked);
 
 	networkManager = new QNetworkAccessManager(this);
 }
@@ -83,6 +85,7 @@ void Enquiry::replyFinishedAPI(){
 			}
 			if (key == "wikiIcon") {
 				QJsonValue value = jsonObject.value(key);
+				QNetworkRequest req;
 				req.setUrl(QUrl(value.toString()));
 				/*创建一个QNetworkReply对象，作为参数传递给函数*/
 				QNetworkReply* replyIcon = networkManager->get(req);  //HTML请求
@@ -93,6 +96,7 @@ void Enquiry::replyFinishedAPI(){
 			}
 		}
 	}
+	replyAPI->abort();
 	replyAPI->deleteLater(); //用户有责任在适当的时候删除 QNetworkreplyAPI 对象
 }
 
@@ -109,12 +113,14 @@ void Enquiry::replyFinishedIcon(int row, QNetworkReply* replyIcon) {
 	}
 	ui.tableWidget->setCellWidget(row, 0, icon);
 	
+	replyIcon->abort();
 	replyIcon->deleteLater();
 }
 
 void Enquiry::on_lineEdit_returnPressed() {
 	QString url = "https://mp.soulofcinder.xyz/eft/api/mainSearch?tag=&page_num=1&page_size=300&item_name=";
 	url = url + ui.lineEdit->text();
+	QNetworkRequest req;
 	req.setUrl(QUrl(url));
 	replyAPI = networkManager->get(req);  //HTML请求
 
@@ -123,10 +129,40 @@ void Enquiry::on_lineEdit_returnPressed() {
 
 void Enquiry::on_pushButton_clicked() {
 	/*debug Here*/
-	QPoint	posPoint = QCursor::pos();
+	QPoint	posPoint = QCursor::pos();	//获取指针位置
 	qDebug() << posPoint;
 	
 	QScreen* screen = QGuiApplication::primaryScreen();
-	QPixmap pixmap = screen->grabWindow(0, posPoint.x(), posPoint.y()-42,  300, 28);
-	pixmap.save("C:/Users/10637_c4lx35f/Desktop/test.png");
+	QPixmap pixmap = screen->grabWindow(0, posPoint.x()+14, posPoint.y()-42,  300, 30);	//根据指针位置截图
+	QBuffer buffer;
+	buffer.open(QIODevice::WriteOnly);
+	pixmap.save(&buffer, "png");
+	auto const base64 = buffer.data().toBase64();	//将图片转换为base64
+	//pixmap.save("C:/Users/10637_c4lx35f/Desktop/test.png");
+	/*配置POST请求*/
+	QNetworkRequest req;
+	QUrl url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic";
+	QString access_token = "24.642429a0b17f786950c2c65de79063f2.2592000.1658895930.282335-26556990";
+	url = url.toString() + "?access_token=" + access_token;	
+	req.setUrl(url);
+	req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
+	QByteArray data;
+	data.append("image=");
+	data.append(QUrl::toPercentEncoding(base64));
+
+	QNetworkReply* replyOCR = networkManager->post(req, data);
+	connect(replyOCR, &QNetworkReply::finished, this, [=]() {
+		Enquiry::replyFinishedOCR(replyOCR);
+	});
 };
+
+void Enquiry::replyFinishedOCR(QNetworkReply* replyOCR) {
+	qDebug() << replyOCR->error();
+	QString replyOCRText = replyOCR->readAll();
+
+	qDebug() << "\n";
+	qDebug() << replyOCRText;
+
+	replyOCR->abort();
+	replyOCR->deleteLater();
+}
