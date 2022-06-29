@@ -1,7 +1,6 @@
 #include "enquiry.h"
 #include "qdebug.h"
 #include "qlabel.h"
-#include "qtimer.h"
 #include "qbuffer.h"
 #include "qscreen.h"
 #include "qtextcodec.h"
@@ -19,10 +18,6 @@ Enquiry::Enquiry(QWidget* parent)
 
 	ui.tableWidget->setColumnCount(3);
 	ui.tableWidget->setColumnWidth(0, 96);
-
-	timer = new QTimer(this);
-	timer->start(5000);
-	connect(timer, &QTimer::timeout, this, &Enquiry::on_pushButton_clicked);
 
 	networkManager = new QNetworkAccessManager(this);
 }
@@ -57,44 +52,36 @@ void Enquiry::replyFinishedAPI() {
 	for (int objCount = 0; objCount < jsonArray.size(); objCount++) {
 		QJsonValue jsonValue = jsonArray.at(objCount);
 		QJsonObject jsonObject = jsonValue.toObject();
-		/*遍历Object的每个key，找到需要的key*/
-		QStringList keys = jsonObject.keys();
 		ui.tableWidget->setRowHeight(objCount, 96);
-		for (int i = 0; i < keys.size(); i++) {
-			QString key = keys.at(i);
-			if (key == "cnName") {
-				QJsonValue value = jsonObject.value(key);
-				QString cnName = value.toString();
-				qDebug() << cnName;
+		/*询名*/
+		QJsonValue valueName = jsonObject.value("cnName");
+		QString cnName = valueName.toString();
+		qDebug() << cnName;
 
-				QTableWidgetItem* nameItem = new QTableWidgetItem;
-				nameItem->setText(cnName);
-				nameItem->setTextColor("#B8B6B4");
-				//nameItem->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter); //居中
-				ui.tableWidget->setItem(objCount, 1, nameItem);
-			}
-			if (key == "avgDayPrice") {
-				QJsonValue value = jsonObject.value(key);
-				double valueDouble = value.toDouble();
-				QString valueStr = QString::number(valueDouble, 'f', 0);
+		QTableWidgetItem* nameItem = new QTableWidgetItem;
+		nameItem->setText(cnName);
+		nameItem->setTextColor("#B8B6B4");
+		//nameItem->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter); //居中
+		ui.tableWidget->setItem(objCount, 1, nameItem);
+		/*询价*/
+		QJsonValue valuePrice = jsonObject.value("avgDayPrice");
+		double valueDouble = valuePrice.toDouble();
+		QString valueStr = QString::number(valueDouble, 'f', 0);
 
-				QTableWidgetItem* valueItem = new QTableWidgetItem;
-				valueItem->setText(valueStr);
-				valueItem->setTextColor("#B8B6B4");
-				ui.tableWidget->setItem(objCount, 2, valueItem);
-			}
-			if (key == "wikiIcon") {
-				QJsonValue value = jsonObject.value(key);
-				QNetworkRequest req;
-				req.setUrl(QUrl(value.toString()));
-				/*创建一个QNetworkReply对象，作为参数传递给函数*/
-				QNetworkReply* replyIcon = networkManager->get(req);  //HTML请求
+		QTableWidgetItem* valueItem = new QTableWidgetItem;
+		valueItem->setText(valueStr);
+		valueItem->setTextColor("#B8B6B4");
+		ui.tableWidget->setItem(objCount, 2, valueItem);
+		/*icon*/
+		QJsonValue value = jsonObject.value("wikiIcon");
+		QNetworkRequest req;
+		req.setUrl(QUrl(value.toString()));
+		/*创建一个QNetworkReply对象，作为参数传递给函数*/
+		QNetworkReply* replyIcon = networkManager->get(req);  //HTML请求
 
-				connect(replyIcon, &QNetworkReply::finished, [=]() {
-					Enquiry::replyFinishedIcon(objCount, replyIcon);
-				});  //当请求完成时，执行函数配置icon
-			}
-		}
+		connect(replyIcon, &QNetworkReply::finished, [=]() {
+			Enquiry::replyFinishedIcon(objCount, replyIcon);
+		});  //当请求完成时，执行函数配置icon
 	}
 	replyAPI->abort();
 	replyAPI->deleteLater(); //用户有责任在适当的时候删除 QNetworkreplyAPI 对象
@@ -129,53 +116,4 @@ void Enquiry::on_lineEdit_returnPressed() {
 
 void Enquiry::on_pushButton_clicked() {
 	/*debug Here*/
-	QPoint	posPoint = QCursor::pos();	//获取指针位置
-	qDebug() << posPoint;
-	
-	QScreen* screen = QGuiApplication::primaryScreen();
-	QPixmap pixmap = screen->grabWindow(0, posPoint.x()+14, posPoint.y()-42,  300, 30);	//根据指针位置截图
-	QBuffer buffer;
-	buffer.open(QIODevice::WriteOnly);
-	pixmap.save(&buffer, "png");
-	auto const base64 = buffer.data().toBase64();	//将图片转换为base64
-	pixmap.save("C:/Users/10637_c4lx35f/Desktop/test.png");
-	/*配置POST请求*/
-	QNetworkRequest req;
-	QUrl url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic";
-	QString access_token = "24.642429a0b17f786950c2c65de79063f2.2592000.1658895930.282335-26556990";
-	url = url.toString() + "?access_token=" + access_token;	
-	req.setUrl(url);
-	req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-	QByteArray data;
-	data.append("image=");
-	data.append(QUrl::toPercentEncoding(base64));
-
-	QNetworkReply* replyOCR = networkManager->post(req, data);
-	connect(replyOCR, &QNetworkReply::finished, this, [=]() {
-		ui.lineEdit->setText(Enquiry::replyFinishedOCR(replyOCR).toLower());
-		emit ui.lineEdit->returnPressed();
-		timer->stop();
-	});
 };
-
-QString Enquiry::replyFinishedOCR(QNetworkReply* replyOCR) {
-	QString replyOCRText = replyOCR->readAll();
-	QJsonDocument replyJson = QJsonDocument::fromJson(replyOCRText.toUtf8());
-	QJsonObject jsonObj = replyJson.object();
-	QJsonValue jsonValue = jsonObj.value("words_result");
-	QJsonArray jsonArray = jsonValue.toArray();
-	QJsonValue wordsValue = jsonArray.first();
-	QJsonObject wordsObj = wordsValue.toObject();
-	QJsonValue words = wordsObj.value("words");
-	QString wordsStr = words.toString();	//套娃 我都不知道写啥注释了 别动这块就行了
-
-	qDebug() << "\n";
-	qDebug() << wordsStr;
-
-	qDebug() << replyOCRText;
-
-	replyOCR->abort();
-	replyOCR->deleteLater();
-
-	return wordsStr;
-}

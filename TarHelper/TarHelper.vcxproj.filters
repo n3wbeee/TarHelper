@@ -42,6 +42,9 @@
     <ClCompile Include="enquiry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="screenOCR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="maps.h">
@@ -50,12 +53,18 @@
     <QtMoc Include="enquiry.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="screenOCR.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="maps.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="enquiry.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="screenOCR.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

@@ -102,10 +102,12 @@
     <QtRcc Include="TarHelperMain.qrc" />
     <QtUic Include="enquiry.ui" />
     <QtUic Include="maps.ui" />
+    <QtUic Include="screenOCR.ui" />
     <QtUic Include="TarHelperMain.ui" />
     <QtMoc Include="TarHelperMain.h" />
     <ClCompile Include="enquiry.cpp" />
     <ClCompile Include="maps.cpp" />
+    <ClCompile Include="screenOCR.cpp" />
     <ClCompile Include="TarHelperMain.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -114,6 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="enquiry.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="screenOCR.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

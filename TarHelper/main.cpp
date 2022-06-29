@@ -1,10 +1,10 @@
 #include "TarHelperMain.h"
+#include "screenOCR.h"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	TarHelperMain mainWidget;
-	mainWidget.show();
+	screenOCR mainWidget;
 	return a.exec();
 }
