@@ -12,6 +12,7 @@
 #include "qcursor.h"
 #include "qwidget.h"
 #include "qtimer.h"
+#include "qevent.h"
 
 screenOCR::screenOCR(QWidget *parent)
 	: QWidget(parent), replyAPI(NULL)
@@ -134,4 +135,9 @@ void screenOCR::replyFinishedAPI() {
 		timer->stop();
 		delete timer;
 	});
+}
+
+void screenOCR::mouseMoveEvent(QMouseEvent* event) {
+	move(event->pos());
+	qDebug() << "MouseMoveEvent";
 }

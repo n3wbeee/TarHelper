@@ -34,7 +34,7 @@
     </font>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>23333</string>
    </property>
   </widget>
   <widget class="QLabel" name="price">
@@ -53,7 +53,7 @@
     </font>
    </property>
    <property name="text">
-    <string/>
+    <string>233</string>
    </property>
   </widget>
  </widget>

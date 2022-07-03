@@ -19,6 +19,7 @@ private:
 	Ui::screenOCRClass ui;
 
 	QString replyFinishedOCR(QNetworkReply* replyOCR);
+	void mouseMoveEvent(QMouseEvent* event);
 	void enquiryPrice(QString itemName);
 	void screenshot();
 
