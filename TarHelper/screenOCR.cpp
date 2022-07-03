@@ -126,7 +126,7 @@ void screenOCR::replyFinishedAPI() {
 	QTimer* timer;
 	timer = new QTimer(this);
 	timer->start(5000);
-	
+	 
 	move(QCursor::pos());
 
 	connect(timer, &QTimer::timeout, [=]() {
