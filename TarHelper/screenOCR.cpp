@@ -141,5 +141,3 @@ void screenOCR::mouseMoveEvent(QMouseEvent* event) {
 	move(event->pos());
 	qDebug() << "MouseMoveEvent";
 }
-
-//»ì¸öContribution
