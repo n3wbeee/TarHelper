@@ -10,7 +10,7 @@ TarHelperMain::TarHelperMain(QWidget* parent)
     setWindowTitle("TarHelper");
     //setWindowFlags(Qt::FramelessWindowHint);
 
-    Enquiry *enquiry = new Enquiry;
-    ui.horizontalLayout->addWidget(enquiry);
-    enquiry->show();
+    Enquiry *widget = new Enquiry;
+    ui.horizontalLayout->addWidget(widget);
+    widget->show();
 }

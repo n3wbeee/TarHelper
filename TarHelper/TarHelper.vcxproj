@@ -65,7 +65,7 @@
       </Command>
     </PostBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\Qt5.9\5.9.9\msvc2017_64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\10637_c4lx35f\source\repos\TarHelper\TarHelper\qxtglobalshortcut5\core;C:\Users\10637_c4lx35f\source\repos\TarHelper\TarHelper\qxtglobalshortcut5\gui;D:\Qt5.9\5.9.9\msvc2017_64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BUILD_QXT_CORE;BUILD_QXT_GUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -107,6 +107,11 @@
     <QtMoc Include="TarHelperMain.h" />
     <ClCompile Include="enquiry.cpp" />
     <ClCompile Include="maps.cpp" />
+    <ClCompile Include="qxtglobalshortcut5\core\qxtglobal.cpp" />
+    <ClCompile Include="qxtglobalshortcut5\gui\qxtglobalshortcut.cpp" />
+    <ClCompile Include="qxtglobalshortcut5\gui\qxtglobalshortcut_win.cpp" />
+    <ClCompile Include="qxtglobalshortcut5\gui\qxtwindowsystem.cpp" />
+    <ClCompile Include="qxtglobalshortcut5\gui\qxtwindowsystem_win.cpp" />
     <ClCompile Include="screenOCR.cpp" />
     <ClCompile Include="TarHelperMain.cpp" />
     <ClCompile Include="main.cpp" />
@@ -119,6 +124,14 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="screenOCR.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="qxtglobalshortcut5\gui\qxtglobalshortcut.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="qxtglobalshortcut5\core\qxtglobal.h" />
+    <ClInclude Include="qxtglobalshortcut5\gui\qxtglobalshortcut_p.h" />
+    <ClInclude Include="qxtglobalshortcut5\gui\qxtwindowsystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

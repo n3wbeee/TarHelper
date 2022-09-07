@@ -1,4 +1,5 @@
 #include "qnetworkaccessmanager.h"
+#include "qxtglobalshortcut.h"
 #include "qnetworkreply.h"
 #include "qjsondocument.h"
 #include "qjsonobject.h"
@@ -14,7 +15,7 @@
 #include "qtimer.h"
 #include "qevent.h"
 
-screenOCR::screenOCR(QWidget *parent)
+ScreenOCR::ScreenOCR(QWidget *parent)
 	: QWidget(parent), replyAPI(NULL)
 {
 	ui.setupUi(this);
@@ -23,23 +24,27 @@ screenOCR::screenOCR(QWidget *parent)
 	setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::SubWindow); //无边框，始终置顶，不显示在任务栏
 	setAttribute(Qt::WA_TranslucentBackground);
 
-	QTimer* timer;
-	timer = new QTimer(this);
-	timer->start(5000);
-
-	connect(timer, &QTimer::timeout, [=]() {
-		screenshot();
-		timer->stop();
-		delete timer;
+	callOut = new QxtGlobalShortcut(this);  //配置全局热键
+	callOut->setShortcut(Qt::CTRL + Qt::Key_F);
+	/*如果调出热键时窗口已经隐藏，执行询价；若窗口显示中，隐藏窗口*/
+	connect(callOut, &QxtGlobalShortcut::activated, [&]() {
+		qDebug() << "function called!";
+		if (isHidden() == true) {
+			screenshot();
+		}
+		else {
+			hide();
+		}
 	});
 }
 
-screenOCR::~screenOCR()
+ScreenOCR::~ScreenOCR()
 {
 	delete networkManager;
+	delete callOut;
 }
 
-QString screenOCR::replyFinishedOCR(QNetworkReply* replyOCR) {
+QString ScreenOCR::replyFinishedOCR(QNetworkReply* replyOCR) {
 	QString replyOCRText = replyOCR->readAll();
 	QJsonDocument replyJson = QJsonDocument::fromJson(replyOCRText.toUtf8());
 	QJsonObject jsonObj = replyJson.object();
@@ -61,7 +66,7 @@ QString screenOCR::replyFinishedOCR(QNetworkReply* replyOCR) {
 	return wordsStr;
 }
 
-void screenOCR::screenshot() {
+void ScreenOCR::screenshot() {
 	QPoint	posPoint = QCursor::pos();	//获取指针位置
 	qDebug() << posPoint;
 
@@ -75,7 +80,7 @@ void screenOCR::screenshot() {
 	/*配置POST请求*/
 	QNetworkRequest req;
 	QUrl url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic";
-	QString access_token = "24.642429a0b17f786950c2c65de79063f2.2592000.1658895930.282335-26556990";
+	QString access_token = "24.5a72d149ff8be6939ce3ebb66cf8ea25.2592000.1665144271.282335-26556990";
 	url = url.toString() + "?access_token=" + access_token;
 	req.setUrl(url);
 	req.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -85,21 +90,21 @@ void screenOCR::screenshot() {
 
 	QNetworkReply* replyOCR = networkManager->post(req, data);
 	connect(replyOCR, &QNetworkReply::finished, [=]() {
-		enquiryPrice(screenOCR::replyFinishedOCR(replyOCR).toLower());
+		enquiryPrice(ScreenOCR::replyFinishedOCR(replyOCR).toLower());
 	});  //当请求完成时，由返回值询价
 }
 
-void screenOCR::enquiryPrice(QString itemName) {
+void ScreenOCR::enquiryPrice(QString itemName) {
 	QString url = "https://mp.soulofcinder.xyz/eft/api/mainSearch?tag=&page_num=1&page_size=1&item_name=";
 	url = url + itemName;
 	QNetworkRequest req;
 	req.setUrl(QUrl(url));
 	replyAPI = networkManager->get(req);  //HTML请求
 
-	connect(replyAPI, &QNetworkReply::finished, this, &screenOCR::replyFinishedAPI);  //当请求完成时，执行槽函数
+	connect(replyAPI, &QNetworkReply::finished, this, &ScreenOCR::replyFinishedAPI);  //当请求完成时，执行槽函数
 }
 
-void screenOCR::replyFinishedAPI() {
+void ScreenOCR::replyFinishedAPI() {
 	QTextCodec* codec = QTextCodec::codecForName("utf8");
 	QString replyAPIText = codec->toUnicode(replyAPI->readAll());
 	QJsonDocument replyAPIJson = QJsonDocument::fromJson(replyAPIText.toUtf8());
@@ -111,33 +116,20 @@ void screenOCR::replyFinishedAPI() {
 		/*询价*/
 		QJsonValue valuePrice = jsonObject.value("avgDayPrice");
 		double valueDouble = valuePrice.toDouble();
-		screenOCR::price = QString::number(valueDouble, 'f', 0);
+		ScreenOCR::price = QString::number(valueDouble, 'f', 0);
 
 		QJsonValue valuePricePerSlot = jsonObject.value("avgWeekPricePerSlot");
 		double valueSlot = valuePricePerSlot.toDouble();
-		screenOCR::pricePerSlot = QString::number(valueSlot, 'f', 0);
-	} 
+		ScreenOCR::pricePerSlot = QString::number(valueSlot, 'f', 0);
+	}
 	replyAPI->abort();
 	replyAPI->deleteLater(); //用户有责任在适当的时候删除 QNetworkreplyAPI 对象
-	
-	ui.priceText->setText("Price:");
-	ui.price->setText(price);
+
+	ui.priceNow->setText(price);
 	show();
-
-	QTimer* timer;
-	timer = new QTimer(this);
-	timer->start(5000);
-	 
-	move(QCursor::pos());
-
-	connect(timer, &QTimer::timeout, [=]() {
-		hide();
-		timer->stop();
-		delete timer;
-	});
 }
 
-void screenOCR::mouseMoveEvent(QMouseEvent* event) {
+void ScreenOCR::mouseMoveEvent(QMouseEvent* event) {
 	move(event->pos());
 	qDebug() << "MouseMoveEvent";
 }

@@ -1,16 +1,18 @@
 #pragma once
 
 #include <QWidget>
+#include <QShortCut>
 #include "ui_screenOCR.h"
+#include "qxtglobalshortcut.h"
 #include "qnetworkaccessmanager.h"
 
-class screenOCR : public QWidget
+class ScreenOCR : public QWidget
 {
 	Q_OBJECT
 
 public:
-	screenOCR(QWidget *parent = nullptr);
-	~screenOCR();
+	ScreenOCR(QWidget *parent = nullptr);
+	~ScreenOCR();
 
 private slots:
 	void replyFinishedAPI();
@@ -24,6 +26,7 @@ private:
 	void screenshot();
 
 	QNetworkAccessManager* networkManager;
+	QxtGlobalShortcut* callOut;
 	QNetworkReply* replyAPI;
 	QString pricePerSlot;
 	QString price;

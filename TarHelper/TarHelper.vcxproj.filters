@@ -17,6 +17,12 @@
       <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
       <Extensions>ui</Extensions>
     </Filter>
+    <Filter Include="Source Files\Shortcut">
+      <UniqueIdentifier>{b2ca0cc4-0dc2-43ed-a335-2ba7a7e8cdc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shortcut">
+      <UniqueIdentifier>{c40fc3f7-fce6-4b63-841d-0a3f53835143}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="TarHelperMain.qrc">
@@ -45,6 +51,21 @@
     <ClCompile Include="screenOCR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="qxtglobalshortcut5\core\qxtglobal.cpp">
+      <Filter>Source Files\Shortcut</Filter>
+    </ClCompile>
+    <ClCompile Include="qxtglobalshortcut5\gui\qxtglobalshortcut.cpp">
+      <Filter>Source Files\Shortcut</Filter>
+    </ClCompile>
+    <ClCompile Include="qxtglobalshortcut5\gui\qxtglobalshortcut_win.cpp">
+      <Filter>Source Files\Shortcut</Filter>
+    </ClCompile>
+    <ClCompile Include="qxtglobalshortcut5\gui\qxtwindowsystem.cpp">
+      <Filter>Source Files\Shortcut</Filter>
+    </ClCompile>
+    <ClCompile Include="qxtglobalshortcut5\gui\qxtwindowsystem_win.cpp">
+      <Filter>Source Files\Shortcut</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="maps.h">
@@ -55,6 +76,9 @@
     </QtMoc>
     <QtMoc Include="screenOCR.h">
       <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="qxtglobalshortcut5\gui\qxtglobalshortcut.h">
+      <Filter>Header Files\Shortcut</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -67,5 +91,16 @@
     <QtUic Include="screenOCR.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="qxtglobalshortcut5\gui\qxtglobalshortcut_p.h">
+      <Filter>Header Files\Shortcut</Filter>
+    </ClInclude>
+    <ClInclude Include="qxtglobalshortcut5\gui\qxtwindowsystem.h">
+      <Filter>Header Files\Shortcut</Filter>
+    </ClInclude>
+    <ClInclude Include="qxtglobalshortcut5\core\qxtglobal.h">
+      <Filter>Header Files\Shortcut</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

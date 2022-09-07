@@ -1,3 +1,4 @@
+#include <QShortCut>
 #include "enquiry.h"
 #include "qdebug.h"
 #include "qlabel.h"
@@ -10,6 +11,7 @@
 #include "qtablewidget.h"
 #include "qjsondocument.h"
 #include "qnetworkreply.h"
+#include "qxtglobalshortcut.h"
 
 Enquiry::Enquiry(QWidget* parent)
 	: QWidget(parent), replyAPI(NULL)

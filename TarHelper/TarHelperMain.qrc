@@ -10,4 +10,7 @@
         <file alias="openOutside">G:/inc/openOutside.png</file>
         <file alias="reset">G:/inc/reset.png</file>
     </qresource>
+    <qresource prefix="/Background">
+        <file>OCRBackground.png</file>
+    </qresource>
 </RCC>
