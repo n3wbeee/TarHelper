@@ -57,7 +57,6 @@ QString ScreenOCR::replyFinishedOCR(QNetworkReply* replyOCR) {
 
 	qDebug() << "\n";
 	qDebug() << wordsStr;
-
 	qDebug() << replyOCRText;
 
 	replyOCR->abort();
@@ -127,7 +126,7 @@ void ScreenOCR::replyFinishedAPI() {
 		double valueSlot = valuePricePerSlot.toDouble();
 		ScreenOCR::pricePerSlot = QString::number(valueSlot, 'f', 0);
 
-		QJsonValue valueName = jsonObject.value("cnName");
+		QJsonValue valueName = jsonObject.value("cnShortName");
 		ScreenOCR::cnName = valueName.toString();
 		qDebug() << cnName;
 	}
@@ -138,6 +137,7 @@ void ScreenOCR::replyFinishedAPI() {
 	ui.priceNow->setText(price);
 	ui.risefall->setText(change7d);
 	ui.pricePerSlot->setText(pricePerSlot);
+	move(QCursor::pos());
 	show();
 }
 
