@@ -118,14 +118,26 @@ void ScreenOCR::replyFinishedAPI() {
 		double valueDouble = valuePrice.toDouble();
 		ScreenOCR::price = QString::number(valueDouble, 'f', 0);
 
-		QJsonValue valuePricePerSlot = jsonObject.value("avgWeekPricePerSlot");
+		QJsonValue valueChange7d = jsonObject.value("change7d");
+		double valueChange = valueChange7d.toDouble();
+		ScreenOCR::change7d = QString::number(valueChange, 'f', 2);
+		ScreenOCR::change7d = ScreenOCR::change7d + "%";
+
+		QJsonValue valuePricePerSlot = jsonObject.value("avgDayPricePerSlot");
 		double valueSlot = valuePricePerSlot.toDouble();
 		ScreenOCR::pricePerSlot = QString::number(valueSlot, 'f', 0);
+
+		QJsonValue valueName = jsonObject.value("cnName");
+		ScreenOCR::cnName = valueName.toString();
+		qDebug() << cnName;
 	}
 	replyAPI->abort();
 	replyAPI->deleteLater(); //用户有责任在适当的时候删除 QNetworkreplyAPI 对象
 
+	ui.name->setText(cnName);
 	ui.priceNow->setText(price);
+	ui.risefall->setText(change7d);
+	ui.pricePerSlot->setText(pricePerSlot);
 	show();
 }
 

@@ -29,5 +29,7 @@ private:
 	QxtGlobalShortcut* callOut;
 	QNetworkReply* replyAPI;
 	QString pricePerSlot;
+	QString change7d;
+	QString cnName;
 	QString price;
 };
