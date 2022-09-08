@@ -11,8 +11,7 @@
 
 Maps::Maps(QWidget *parent)
 	: QWidget(parent), qimg(":/Maps/reserve"), 
-	imgSizeDivisor(1), fileName("reserve.jpg")
-{	
+	imgSizeDivisor(1), fileName("reserve.jpg") {	
 	ui.setupUi(this);
 
 	ui.mapArea->installEventFilter(this);	//安装事件过滤器

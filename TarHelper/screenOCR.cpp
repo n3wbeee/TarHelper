@@ -16,8 +16,7 @@
 #include "qevent.h"
 
 ScreenOCR::ScreenOCR(QWidget *parent)
-	: QWidget(parent), replyAPI(NULL)
-{
+	: QWidget(parent), replyAPI(NULL) {
 	ui.setupUi(this);
 	networkManager = new QNetworkAccessManager(this);
 
@@ -38,8 +37,7 @@ ScreenOCR::ScreenOCR(QWidget *parent)
 	});
 }
 
-ScreenOCR::~ScreenOCR()
-{
+ScreenOCR::~ScreenOCR() {
 	delete networkManager;
 	delete callOut;
 }

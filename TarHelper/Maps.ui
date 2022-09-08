@@ -10,6 +10,11 @@
     <height>560</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+   </font>
+  </property>
   <property name="contextMenuPolicy">
    <enum>Qt::ActionsContextMenu</enum>
   </property>
@@ -22,7 +27,7 @@
 }
 
 QPushButton{
-	font-family: &quot;Source Han Sans CN&quot;;
+	font-family: &quot;Microsoft YaHei&quot;;
 	font-size: 12pt;
 	background-color:#252423;
 	border-style: none;
@@ -128,6 +133,12 @@ QGroupBox{
       </item>
       <item>
        <widget class="QPushButton" name="interchange">
+        <property name="font">
+         <font>
+          <family>Microsoft YaHei</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>立交桥</string>
         </property>
@@ -154,6 +165,12 @@ QGroupBox{
       </item>
       <item>
        <widget class="QPushButton" name="forest">
+        <property name="font">
+         <font>
+          <family>Microsoft YaHei</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>森林</string>
         </property>
@@ -235,8 +252,8 @@ QGroupBox{
          <string>外部打开</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>G:/inc/openOutside.png</normaloff>G:/inc/openOutside.png</iconset>
+         <iconset resource="TarHelperMain.qrc">
+          <normaloff>:/icons/openOutside</normaloff>:/icons/openOutside</iconset>
         </property>
         <property name="iconSize">
          <size>

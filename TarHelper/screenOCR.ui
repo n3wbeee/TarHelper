@@ -38,7 +38,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>OCRBackground.png</pixmap>
+      <pixmap resource="TarHelperMain.qrc">:/Background/OCRBackground</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -76,7 +76,7 @@
         </property>
         <property name="font">
          <font>
-          <family>JetBrains Mono</family>
+          <family>微软雅黑</family>
           <pointsize>24</pointsize>
          </font>
         </property>
@@ -160,6 +160,8 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="TarHelperMain.qrc"/>
+ </resources>
  <connections/>
 </ui>

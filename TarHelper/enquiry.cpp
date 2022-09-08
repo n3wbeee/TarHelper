@@ -14,8 +14,7 @@
 #include "qxtglobalshortcut.h"
 
 Enquiry::Enquiry(QWidget* parent)
-	: QWidget(parent), replyAPI(NULL)
-{
+	: QWidget(parent), replyAPI(NULL) {
 	ui.setupUi(this);
 
 	ui.tableWidget->setColumnCount(3);
@@ -24,8 +23,7 @@ Enquiry::Enquiry(QWidget* parent)
 	networkManager = new QNetworkAccessManager(this);
 }
 
-Enquiry::~Enquiry()
-{	
+Enquiry::~Enquiry() {	
 	delete networkManager;
 }
 

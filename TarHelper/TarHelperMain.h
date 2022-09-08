@@ -3,8 +3,7 @@
 #include <QtWidgets/QWidget>
 #include "ui_TarHelperMain.h"
 
-class TarHelperMain : public QWidget
-{
+class TarHelperMain : public QWidget {
     Q_OBJECT
 
 public:

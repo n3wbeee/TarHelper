@@ -5,8 +5,7 @@
 #include "ui_enquiry.h"
 #include "qnetworkaccessmanager.h"
 
-class Enquiry : public QWidget
-{
+class Enquiry : public QWidget {
 	Q_OBJECT
 
 public:

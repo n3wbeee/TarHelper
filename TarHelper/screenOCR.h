@@ -6,8 +6,7 @@
 #include "qxtglobalshortcut.h"
 #include "qnetworkaccessmanager.h"
 
-class ScreenOCR : public QWidget
-{
+class ScreenOCR : public QWidget {
 	Q_OBJECT
 
 public:

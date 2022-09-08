@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/Maps">
-        <file alias="forest">G:/Proj/TarHelperCodeOnly/Maps/forest.png</file>
-        <file alias="interchange">G:/Proj/TarHelperCodeOnly/Maps/interchange.jpg</file>
-        <file alias="reserve">G:/Proj/TarHelperCodeOnly/Maps/reserve.jpg</file>
-        <file alias="shoreline">G:/Proj/TarHelperCodeOnly/Maps/shoreline.jpg</file>
+        <file alias="forest">maps/forest.png</file>
+        <file alias="interchange">maps/interchange.jpg</file>
+        <file alias="reserve">maps/reserve.jpg</file>
+        <file alias="shoreline">maps/shoreline.jpg</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="slider">G:/inc/slider.png</file>
@@ -11,6 +11,6 @@
         <file alias="reset">G:/inc/reset.png</file>
     </qresource>
     <qresource prefix="/Background">
-        <file>OCRBackground.png</file>
+        <file alias="OCRBackground">otherResources/OCRBackground.png</file>
     </qresource>
 </RCC>
